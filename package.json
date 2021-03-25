@@ -1,0 +1,27 @@
+{
+  "name": "ofx2csv",
+  "version": "1.0.0",
+  "description": "ofx to csv converter",
+  "main": "index.js",
+  "scripts": {
+    "test": "''"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vinimuller/ofx2csv.git"
+  },
+  "keywords": [
+    "ofx",
+    "csv",
+    "converter"
+  ],
+  "author": "vinimuller",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vinimuller/ofx2csv/issues"
+  },
+  "homepage": "https://github.com/Vinimuller/ofx2csv#readme",
+  "dependencies": {
+    "ofx": "^0.5.0"
+  }
+}
