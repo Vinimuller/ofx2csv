@@ -1,23 +1,24 @@
-const ofx = require('ofx');
-const fs = require('fs');
+const ofx   = require('ofx');
+const fs    = require('fs');
  
+const csvFile = "nubank.csv";
 
-fs.appendFileSync('nubank.csv', "Tipo;Data;Valor;Descricao\r\n");
 
-fs.readFile('nubank.ofx', 'utf8', function(err, ofxData) {
+fs.appendFileSync(csvFile, "Tipo;Data;Valor;Descricao\r\n");
+
+fs.readFile('*.ofx', 'utf8', function(err, ofxData) {
     if (err){
-        console.log("errou");
+        console.log("Erro ao ler arquivo");
         console.log(err);
     }
- 
-    console.log("bombou");
+
     const data = ofx.parse(ofxData);
     var transactions = data.OFX.BANKMSGSRSV1.STMTTRNRS.STMTRS.BANKTRANLIST.STMTTRN;
 
     transactions.forEach(function(obj) {
         // Loop each transaction
         console.log(obj.MEMO);
-        fs.appendFileSync('nubank.csv', obj.TRNTYPE + ";" + obj.DTPOSTED + ";" + obj.TRNAMT + ";" + obj.MEMO + "\r\n");
+        fs.appendFileSync(csvFile, obj.TRNTYPE + ";" + obj.DTPOSTED + ";" + obj.TRNAMT + ";" + obj.MEMO + "\r\n");
     });
 
 });
