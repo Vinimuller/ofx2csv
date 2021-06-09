@@ -57,7 +57,7 @@ fs.readFile(inFile, 'utf8', function(err, ofxData) {
 function writeToCsv(transactionsArr)
 {
     // out file has the same name as in file but with another extension
-    const outFile   = inFile.split(".")[0] + ".csv";
+    const outFile   = inFile.slice(0,-4) + ".csv";
     // csv buffer starts with csv header
     var csvBuffer   = "TRNTYPE,DTPOSTED,TRNAMT,FITID,MEMO,ACUMULATED\r\n";
 
@@ -80,7 +80,7 @@ function writeToCsv(transactionsArr)
 function writeToXlsx(transactionsArr)
 {
     // out file has the same name as in file but with another extension
-    const outFile   = inFile.split(".")[0] + ".xlsx";
+    const outFile   = inFile.slice(0,-4) + ".xlsx";
     // parse from json to xlsx
     const xlsxBuffer  = jsonToXlsx.readAndGetBuffer(transactionsArr);
 
