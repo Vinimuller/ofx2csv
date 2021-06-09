@@ -3,47 +3,18 @@
 const fs            = require('fs');
 const ofx           = require('ofx');
 const {jsonToXlsx}  = require('json-and-xlsx');
-// const { parse }     = require('json2csv');
 
 // get file name from argv
 const inFile    = process.argv[2];
 var xlsxOutput  = false;
 
+// get output format from argv
 if(process.argv[3] == "xlsx")
 {
     xlsxOutput  = true;
 }
 
-// console.log(process.argv);
-// console.log(xlsxOutput);
-
-function writeToCsv(transactionsArr)
-{
-    // out file has the same name as in file but with another extension
-    const outFile   = inFile.split(".")[0] + ".csv";
-    try {
-        const csv = parse(transactionsArr);
-        console.log(csv);
-      } catch (err) {
-        console.error(err);
-      }
-
-    return 0;
-}
- 
-function writeToXlsx(transactionsArr)
-{
-    // out file has the same name as in file but with another extension
-    const outFile   = inFile.split(".")[0] + ".xlsx";
-    // parse from json to xlsx
-    const xlsxData  = jsonToXlsx.readAndGetBuffer(transactionsArr);
-
-    // write data to file
-    fs.writeFileSync(outFile, xlsxData, 'binary');
-
-    return 0;
-}
-
+// read ofx file
 fs.readFile(inFile, 'utf8', function(err, ofxData) {
     if (err){
         console.log(".ofx file not found\n");
@@ -60,7 +31,7 @@ fs.readFile(inFile, 'utf8', function(err, ofxData) {
     // Loop each transaction
     transactions.forEach(function(obj) {
 
-        // parse date param to DD/MM/YY
+        // parse date param to DD/MM/YYYY
         obj.DTPOSTED = obj.DTPOSTED.toString().slice(6,8) + "/" + 
                             obj.DTPOSTED.toString().slice(4,6) + "/" + 
                             obj.DTPOSTED.toString().slice(0,4);
@@ -83,13 +54,49 @@ fs.readFile(inFile, 'utf8', function(err, ofxData) {
     console.log("Done!");
 });
 
+function writeToCsv(transactionsArr)
+{
+    // out file has the same name as in file but with another extension
+    const outFile   = inFile.split(".")[0] + ".csv";
+    // csv buffer starts with csv header
+    var csvBuffer   = "TRNTYPE,DTPOSTED,TRNAMT,FITID,MEMO,ACUMULATED\r\n";
+
+    transactionsArr.forEach(function(obj){
+        // parse an transaction object to string
+        csvBuffer += obj.TRNTYPE + "," +
+                        obj.DTPOSTED + "," +
+                        obj.TRNAMT + "," +
+                        obj.FITID + "," +
+                        obj.MEMO + "," +
+                        obj.ACUMULATED.toFixed(2) + "\r\n";
+    });
+
+    // write to file
+    fs.writeFileSync(outFile, csvBuffer, 'utf8');
+
+    return 0;
+}
+ 
+function writeToXlsx(transactionsArr)
+{
+    // out file has the same name as in file but with another extension
+    const outFile   = inFile.split(".")[0] + ".xlsx";
+    // parse from json to xlsx
+    const xlsxBuffer  = jsonToXlsx.readAndGetBuffer(transactionsArr);
+
+    // write data to file
+    fs.writeFileSync(outFile, xlsxBuffer, 'binary');
+
+    return 0;
+}
+
 /* 
 OFX transaction structure
 {
     TRNTYPE: 'DEBIT',
     DTPOSTED: '20210306000000[0:GMT]',
-    TRNAMT: '-3596.86',
-    FITID: '6043c0a6-7ac1-4100-9bb9-086abd03bad8',
+    TRNAMT: '-666.66',
+    FITID: '6fdsdf-7dce-0000-9aa9-091abd34edd8',
     MEMO: 'Pagamento da fatura - Cartão Nubank'
 }
 */

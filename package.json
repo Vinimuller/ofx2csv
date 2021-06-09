@@ -4,7 +4,7 @@
   "description": "ofx to csv converter",
   "main": "index.js",
   "bin": {
-    "ofx2csv": "./index.js"
+    "ofx-conv": "./index.js"
   },
   "scripts": {
     "test": "''"
