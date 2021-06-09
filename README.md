@@ -18,6 +18,7 @@ $ ofx-conv <pathToFile> [outputFormat]
 ```
 #### Input
 `pathToFile`    -> Relative or absolute path to `ofx` file
+
 `outputFormat`  -> "xlsx" for `.xlsx` format. Default value is `.csv`
 #### Output
 The output file will be at the same folder as the input file.
@@ -33,7 +34,8 @@ $ ofx-conv myFile.ofx
 $ ofx-conv /Users/me/Desktop/myFile.ofx xlsx
 ```
 
-Feel free to contribute! 
 
+
+Feel free to contribute! 
 Vinícius Muller Silveira
 
