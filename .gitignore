@@ -2,3 +2,5 @@
 .DS_Store
 *.csv
 *.ofx
+
+*.xlsx

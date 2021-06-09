@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "ofx to csv converter",
   "main": "index.js",
+  "bin": {
+    "ofx2csv": "./index.js"
+  },
   "scripts": {
     "test": "''"
   },
@@ -22,6 +25,7 @@
   },
   "homepage": "https://github.com/Vinimuller/ofx2csv#readme",
   "dependencies": {
+    "json-and-xlsx": "^2.1.2",
     "ofx": "^0.5.0"
   }
 }
