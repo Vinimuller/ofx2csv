@@ -37,5 +37,6 @@ $ ofx-conv /Users/me/Desktop/myFile.ofx xlsx
 
 
 Feel free to contribute! 
+
 Vinícius Muller Silveira
 
